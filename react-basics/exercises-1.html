@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>React Basics</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+    <div class="js-container-1"></div>
+
+    <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <!-- babel: translates jsx into js for web browser-->
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script> 
+    <script type="text/babel">
+      // const root = ReactDOM.createRoot(document.querySelector(".js-container-1"));
+
+      function Exercise3g() {
+        const [inputText, setInputText] = React.useState('');
+
+        function saveInputText(inputEvent){
+          setInputText(inputEvent.target.value);
+        }
+        function resetText(){
+          setInputText('');
+        }
+
+        function setExample(){
+          setInputText('Alice');
+        }
+        
+        return(
+          <>
+            <input
+            placeholder="type a name"
+            type="text"
+            onChange={saveInputText}
+            value={inputText}/>
+
+            <button onClick={resetText}>Reset</button>
+            <button onClick={setExample}>Example</button>
+
+            <p>Hello {inputText}</p>
+          </>
+        );
+      }
+
+      const container = document.querySelector('.js-container');
+      ReactDOM.createRoot(container).render(<Exercise3g/>);
+    </script>
+  </body>
+</html>

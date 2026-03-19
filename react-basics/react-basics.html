@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>React Basics</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+    <div class="js-container-1"></div>
+
+    <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <!-- babel: translates jsx into js for web browser-->
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script> 
+    <script type="text/babel">
+      const button = <button>hello</button>;
+      const paragraph = <p>para of text</p>;
+
+      const root = ReactDOM.createRoot(document.querySelector(".js-container-1"));
+
+      const day = dayjs().format('MMMM D');
+      console.log(day);
+
+      const div = (
+        <div>
+          <button>hello</button>
+          <p>para of text {6 + 7}, {day}</p>
+        </div>
+      );
+
+      let clk;
+
+      setInterval(() => {
+        clk = dayjs().format('HH:mm:ss');
+        root.render(clk);
+      }, 1000);
+
+      const container = document.querySelector('.js-container');
+      ReactDOM.createRoot(container).render(div);
+    </script>
+  </body>
+</html>

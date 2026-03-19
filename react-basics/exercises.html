@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>React Basics</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+    <div class="js-exercise-3"></div>
+
+    <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <!-- babel: translates jsx into js for web browser-->
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script> 
+    <script type="text/babel">
+      
+      function LoginForm() {
+        return (
+          <>
+            <p>Hey there!</p>
+            <div>
+              <input type="text" placeholder="Email"/>
+            </div>
+            <div>
+              <input type="text" placeholder="Password"/>
+            </div>
+            <button>Login</button>
+            <button>Sign Up</button>
+          </>
+        );
+      }
+
+      function Products({name, price, discount}) {
+        return(
+          <>
+            <p>{name}</p>
+            {!discount ? <p>Price: ${price}</p> : <del><p>Price: ${price}</p></del>}
+            {discount && <p>Discount: ${discount}</p>}
+            <button>add to cart</button>
+          </>
+        );
+      }
+
+
+      function App() {
+        return (
+          <>
+            <LoginForm/>
+            <Products name = "socks" price="10.9"/>
+            <Products name = "shoes" price="10" discount="9"/>
+          </>
+        );
+      }
+            
+      function Counter({count, setCount}) {
+
+        function updateCount() {
+          setCount(count + 1);
+        }
+        return(
+            <button onClick={updateCount}>
+              clicked {count} {count === 1 ? 'time' : 'times'}
+            </button>
+        );
+      }
+
+      function Reset({setCount}) {
+
+        function resetCount(){
+          setCount(0);
+        }
+
+          return(
+            <button onClick={resetCount}>
+              Reset
+            </button>
+          );
+        }
+      
+
+      function Counters(){
+        const [count, setCount] = React.useState(0);
+
+        return(
+          <>
+            <Counter
+            count = {count}
+            setCount = {setCount}
+            />
+            <Counter
+            count = {count}
+            setCount = {setCount}
+            />
+
+            <Reset
+              setCount = {setCount}
+            />
+          </>
+        );
+      }
+
+      const container = document.querySelector('.js-container');
+      ReactDOM.createRoot(container).render(<App/>);
+
+      const container1 = document.querySelector('.js-exercise-3');
+      ReactDOM.createRoot(container1).render(<Counters/>);
+    </script>
+  </body>
+</html>

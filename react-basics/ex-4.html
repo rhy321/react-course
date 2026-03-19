@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>React Basics</title>
+    <style>
+
+      body {
+        margin: 0;
+      }
+
+      button {
+        background-color: rgb(101, 145, 255);
+      }
+
+      input {
+        width: 130px;
+      }
+
+      .btn{
+        border: none;
+        color: white;
+        padding: 5px;
+      }
+
+      .on-btn {
+        background-color: rgb(25,135,84);
+      }
+
+      .off-btn {
+        background-color: red;
+      }
+
+      .login-container{
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+      }
+
+      .ex-4-div{
+        display: flex;
+        justify-content: center;
+        height: 100vh;
+        background-color: beige;
+        align-items: center;
+      }
+
+      .ex-4-btn{
+        background-color: rgb(25,135,84);
+        border: none;
+        padding: 8px;
+        color: white;
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="js-container"></div>
+    <div class="js-container-1"></div>
+    <div class="js-container-2"></div>
+
+    <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <!-- babel: translates jsx into js for web browser-->
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script> 
+    <script type="text/babel">
+      function App() {
+
+        const [isBtnOn, setIsBtnOn] = React.useState(true);
+
+        function switchBtnOn(){
+          if(isBtnOn) {
+            setIsBtnOn(false);
+          } else {
+            setIsBtnOn(true);
+          }
+        }
+
+        return (
+          <button 
+            className={isBtnOn ? "btn on-btn" : "btn off-btn"}
+            onClick = {switchBtnOn}>
+            {isBtnOn ? 'ON' : 'OFF'}
+          </button>
+        );
+      }
+
+      function LoginForm() {
+        const [showPassword, setShowPassword] = React.useState(true);
+        
+        function PasswordTog(){
+          if(showPassword){
+            setShowPassword(false);
+          } else {
+            setShowPassword(true);
+          }
+        }
+        
+        return(
+          <>
+            <div className = "login-container">
+            <input placeholder="email" type="text"/>
+              <div>
+              <input placeholder="password" type={showPassword ? "password" :"text"}/>
+              <button
+                onClick = {PasswordTog}
+                > 
+                {showPassword ? "Show" : "Hide"}
+              </button>
+            </div>
+            <div>
+              <button>Login</button>
+              <button>Sign Up</button>
+            </div>
+          </div>
+          </>
+        );
+      }
+
+      function App1(){
+        return(
+          <>
+            <p>Hi! Welcome!</p>
+            <LoginForm/>
+          </>
+        );
+      }
+
+      function Counter({counter, setCounter, clickButtonRef}){
+
+        function updateCount(){
+          setCounter(prev => prev + 1);
+        }
+
+        return (
+          <button 
+          ref={clickButtonRef}
+          onClick = {updateCount} 
+          className = "ex-4-btn">
+            clicked {counter} {counter === 1 ? 'time' : 'times'}
+          </button>
+        );
+      }
+
+      function Reset({setCounter}){
+
+        function resetCount(){
+          setCounter(0);
+        }
+
+        return(
+          <button onClick={resetCount} className = "ex-4-btn">
+            Reset
+          </button>
+        );
+      }
+
+      function AutoClick({clickButtonRef}){
+
+        function click(){
+          setInterval(()=>{
+            const btn = clickButtonRef.current;
+            if (btn) {
+              btn.click();
+            }
+          },1000);
+        }
+
+        return(
+          <>
+            <button onClick = {click} className = "ex-4-btn">
+              Auto Click
+            </button>
+          </>
+        );
+      }
+
+      function App4f(){
+        const [time, setTime] = React.useState(dayjs().format('HH:mm:ss'));
+        const [count, setCount] = React.useState(0);
+        const clickButtonRef = React.useRef();
+
+        React.useEffect(()=>{
+          setInterval(() => {
+            setTime(dayjs().format('HH:mm:ss'));
+            console.log('run');
+          },1000)
+        }, []);
+
+        return (
+          <>
+            <p>{time}</p>
+            <div className = "ex-4-div">
+              <Counter
+              counter = {count}
+              clickButtonRef={clickButtonRef}
+              setCounter = {setCount}/>
+              <Reset
+              setCounter = {setCount}/>
+              <AutoClick
+              clickButtonRef = {clickButtonRef}
+              />
+            </div>
+          </>
+        );
+      }
+
+      const container = document.querySelector('.js-container');
+      ReactDOM.createRoot(container).render(<App/>);
+
+      ReactDOM.createRoot(document.querySelector('.js-container-1')).render(<App1/>);
+
+      ReactDOM.createRoot(document.querySelector('.js-container-2')).render(<App4f/>);
+
+    </script>
+  </body>
+</html>
