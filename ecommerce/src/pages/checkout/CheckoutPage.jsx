@@ -3,39 +3,44 @@ import { useState, useEffect } from 'react';
 import { CheckoutHeader } from '../../components/CheckoutHeader';
 import './CheckoutPage.css';
 import { OrderSummary } from './OrderSummary';
-import {PaymentSummary} from './PaymentSummary';
+import { PaymentSummary } from './PaymentSummary';
 
-export function CheckoutPage({ cart }) {
+export function CheckoutPage({ cart, loadCart }) {
   const [deliveryOptions, setDeliveryOptions] = useState([]);
   const [paymentSummary, setPaymentSummary] = useState(null);
 
   useEffect(() => {
-    const getCheckoutData = async() => {
-      let response = await axios.get('/api/delivery-options?expand=estimatedDeliveryTime')
+    const getCheckoutData = async () => {
+      const response = await axios.get('/api/delivery-options?expand=estimatedDeliveryTime')
       setDeliveryOptions(response.data);
-
-      response = await axios.get('/api/payment-summary')
-      setPaymentSummary(response.data);
     }
     getCheckoutData();
   }, []);
 
-  return (
-    <>
-      <title>Checkout</title>
-      <link rel="icon" type="image/svg+xml" href="cart-favicon.png" />
+  useEffect(() => {
+    const getPaymentData = async() => {
+      const response = await axios.get('/api/payment-summary')
+      setPaymentSummary(response.data);
+    }
+    getPaymentData();
+  }, [cart]);
 
-      <CheckoutHeader cart={cart}/>
+return (
+  <>
+    <title>Checkout</title>
+    <link rel="icon" type="image/svg+xml" href="cart-favicon.png" />
 
-      <div className="checkout-page">
-        <div className="page-title">Review your order</div>
+    <CheckoutHeader cart={cart} />
 
-        <div className="checkout-grid">
-          <OrderSummary cart = {cart} deliveryOptions = {deliveryOptions} />
+    <div className="checkout-page">
+      <div className="page-title">Review your order</div>
 
-          <PaymentSummary paymentSummary = {paymentSummary} />
-        </div>
+      <div className="checkout-grid">
+        <OrderSummary cart={cart} deliveryOptions={deliveryOptions} loadCart={loadCart} />
+
+        <PaymentSummary paymentSummary={paymentSummary} />
       </div>
-    </>
-  );
+    </div>
+  </>
+);
 }
