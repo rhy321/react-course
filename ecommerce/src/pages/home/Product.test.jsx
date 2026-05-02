@@ -59,6 +59,7 @@ describe('Product Component', () => {
   });
 
   it('selects a quantity', async()=>{
+    const user = userEvent.setup();
     render(<Product product={product} loadCart={loadCart}/>);
     const qtySelector = screen.getByTestId('product-quantity-selector');
 
