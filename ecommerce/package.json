@@ -7,7 +7,7 @@
     "dev": "vite",
     "build:frontend": "vite build",
     "build:backend": "npm --prefix ../ecommerce-backend run zip",
-    "build":"run-s build:frontend build:backend",
+    "build": "run-s build:frontend build:backend",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -27,6 +27,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
+    "babel-plugin-react-compiler": "^19.1.0-rc.3",
     "eslint": "^9.39.4",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
