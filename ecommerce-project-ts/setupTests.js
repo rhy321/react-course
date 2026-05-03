@@ -1,0 +1,1 @@
+import '@testing-library/jest-dom'; //adds more methods to expect for testing components 

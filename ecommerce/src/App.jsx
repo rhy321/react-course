@@ -10,7 +10,7 @@ import { useState } from 'react'
 import axios from 'axios'
 
 function App() {
-
+// This is a bit of a hack to make axios available globally in the browser console for testing purposes. You can remove this line if you don't need it.
   window.axios = axios;
 
   const [cart, setCart] = useState([]);
